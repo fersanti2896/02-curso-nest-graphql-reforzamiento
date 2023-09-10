@@ -33,11 +33,25 @@ export class TodoService {
     return todo;
   }
 
-  update( id: number, updateTodoDto: UpdateTodoDto ) {
-    return `This action updates a #${id} todo`;
+  update( id: number, updateTodoDto: UpdateTodoDto ): Todo {
+    const { description, done } = updateTodoDto;
+    const todo = this.findOne(id);
+
+    if( done !== undefined ) todo.done = done;
+    if( description ) todo.description = description;
+
+    this.todos = this.todos.map( todoDB => {
+      if( todoDB.id === id ) return todo;
+
+      return todoDB;
+    } );
+
+    return todo;
   }
 
   remove( id: number ) {
-    return `This action removes a #${id} todo`;
+    this.findOne(id);
+
+    this.todos = this.todos.filter( todo => todo.id !== id );
   }
 }
