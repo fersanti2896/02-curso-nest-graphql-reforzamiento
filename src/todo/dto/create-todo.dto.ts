@@ -1,2 +1,7 @@
+import { IsString, IsNotEmpty } from 'class-validator';
 
-export class CreateTodoDto {}
+export class CreateTodoDto {
+    @IsString()
+    @IsNotEmpty()
+    description: string;
+}
